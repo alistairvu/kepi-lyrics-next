@@ -38,7 +38,9 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
     await twitterClient.tweets.statusesUpdate({ status: lyric });
     res.status(200).send({ success: true, lyric });
   } catch (err: any) {
-    res.status(500).send({ success: false, message: err.message });
+    res
+      .status(500)
+      .send({ success: false, code: err.code, message: err.message });
   }
 };
 
