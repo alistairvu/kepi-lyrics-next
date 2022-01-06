@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { getResult } from '../utils/lyric';
 
@@ -55,7 +55,7 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
   </>
 );
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { lyric } = await getResult();
   return { props: { lyric } };
 };
