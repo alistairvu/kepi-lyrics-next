@@ -1,16 +1,17 @@
+/* eslint-disable capitalized-comments */
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import { TwitterClient } from 'twitter-api-client';
+// import { TwitterClient } from 'twitter-api-client';
 import type { Result } from '../../utils/lyric';
 import { getResult } from '../../utils/lyric';
 
-const twitterClient = new TwitterClient({
-  apiKey: process.env.TWITTER_API_KEY as string,
-  apiSecret: process.env.TWITTER_API_SECRET as string,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-});
+// const twitterClient = new TwitterClient({
+//   apiKey: process.env.TWITTER_API_KEY as string,
+//   apiSecret: process.env.TWITTER_API_SECRET as string,
+//   accessToken: process.env.TWITTER_ACCESS_TOKEN,
+//   accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+// });
 
 const getLyric = async (res: NextApiResponse<Result>) => {
   const result = await getResult();
@@ -25,19 +26,26 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error(`Invalid authorization header`);
     }
 
-    const auth = authHeader.split(' ')[1];
-    const [user, password] = Buffer.from(auth, 'base64').toString().split(':');
+    // const auth = authHeader.split(' ')[1];
+    // const [user, password] = Buffer.from(auth, 'base64').toString().split(':');
 
-    if (
-      user !== process.env.AUTH_USERNAME ||
-      password !== process.env.AUTH_PASSWORD
-    ) {
-      throw new Error(`Invalid authorization header`);
+    // if (
+    //   user !== process.env.AUTH_USERNAME ||
+    //   password !== process.env.AUTH_PASSWORD
+    // ) {
+    //   throw new Error(`Invalid authorization header`);
+    // }
+
+    if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
+      res
+        .status(403)
+        .send({ success: false, message: `Invalid authorization header` });
+      return;
     }
 
     const { lyric } = await getResult();
 
-    await twitterClient.tweets.statusesUpdate({ status: lyric });
+    // await twitterClient.tweets.statusesUpdate({ status: lyric });
     res.status(200).send({ success: true, lyric });
   } catch (err: any) {
     res.status(500).send({ success: false, message: err.message });
