@@ -3,10 +3,6 @@ on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
-    inputs:
-      secret_key:
-        description: 'Secret key'
-        required: true
 
 jobs:
   cron:
