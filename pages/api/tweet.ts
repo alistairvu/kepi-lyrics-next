@@ -22,7 +22,7 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      throw new Error(`Invalid authorization header`);
+      throw new Error(`Invalid authorization header: ${authHeader}`);
     }
 
     if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
