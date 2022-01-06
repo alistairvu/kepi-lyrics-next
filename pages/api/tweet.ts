@@ -25,23 +25,11 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error(`Invalid authorization header`);
     }
 
-    const auth = authHeader.split(' ')[1];
-    const [user, password] = Buffer.from(auth, 'base64').toString().split(':');
-
-    if (
-      user !== process.env.AUTH_USERNAME ||
-      password !== process.env.AUTH_PASSWORD
-    ) {
-      throw new Error(`Invalid authorization header`);
-    }
-
     if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
-      res
-        .status(403)
-        .send({
-          success: false,
-          message: `Invalid authorization header: ${authHeader}`,
-        });
+      res.status(403).send({
+        success: false,
+        message: `Invalid authorization header: ${authHeader}`,
+      });
       return;
     }
 
