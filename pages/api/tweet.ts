@@ -38,7 +38,10 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
     if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
       res
         .status(403)
-        .send({ success: false, message: `Invalid authorization header` });
+        .send({
+          success: false,
+          message: `Invalid authorization header: ${authHeader}`,
+        });
       return;
     }
 
