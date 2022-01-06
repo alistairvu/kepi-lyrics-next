@@ -15,14 +15,16 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
 
     <div className="w-screen h-screen bg-gradient-to-br from-purple-500 to-purple-700 text-slate-100 flex flex-col items-center justify-center">
       <header className="w-full absolute top-0 drop-shadow-md py-2 text-center bg-white">
-        <h1 className="font-extrabold bg-gradient-to-bl from-purple-500 via-purple-700 to-purple-900 text-transparent bg-clip-text text-4xl">
+        <h1 className="font-extrabold bg-gradient-to-bl from-purple-500 via-purple-700 to-purple-900 text-transparent bg-clip-text text-4xl cursor-default">
           kepilyrics
         </h1>
       </header>
 
       <main className="px-4">
-        <h1 className="text-center font-bold text-6xl w-full py-2">{lyric}</h1>
-        <h2 className="text-center text-3xl w-full py-4">
+        <h1 className="text-center font-bold text-4xl md:text-6xl w-full">
+          {lyric}
+        </h1>
+        <h2 className="text-center text-2xl md:text-3xl w-full py-2 md:py-4">
           an hourly lyrics bot for Kep1er!
         </h2>
         <div className="w-full text-center">
