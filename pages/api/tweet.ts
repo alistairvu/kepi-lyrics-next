@@ -29,8 +29,9 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
     const tweet = `${lyric}\n\n— ${song.toLowerCase()}`;
 
     if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
-      res.status(403).send({
-        success: false,
+      res.status(200).send({
+        success: true,
+        tweeted: false,
         tweet,
         message: `Invalid authorization header: ${authHeader}`,
       });
@@ -40,7 +41,7 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
     await twitterClient.tweets.statusesUpdate({
       status: tweet,
     });
-    res.status(200).send({ success: true, tweet });
+    res.status(200).send({ success: true, tweeted: true, tweet });
   } catch (err: any) {
     res
       .status(500)
