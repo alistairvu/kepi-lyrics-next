@@ -25,15 +25,16 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error(`Invalid authorization header: ${authHeader}`);
     }
 
+    const { lyric } = await getResult();
+
     if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
       res.status(403).send({
         success: false,
         message: `Invalid authorization header: ${authHeader}`,
+        lyric,
       });
       return;
     }
-
-    const { lyric } = await getResult();
 
     await twitterClient.tweets.statusesUpdate({ status: lyric });
     res.status(200).send({ success: true, lyric });
