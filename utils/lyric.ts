@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'fs/promises';
 import path from 'path';
+import matter from 'gray-matter';
 
 export type Result = {
   album: string;
@@ -15,8 +16,6 @@ type GetChildrenParams = {
 const getRandom = (elements: string[]) =>
   elements[Math.floor(Math.random() * elements.length)];
 
-const transformName = (name: string) => name.split('.')[0].split('-').join(' ');
-
 const getChildren = async ({ pathName, isDir = true }: GetChildrenParams) => {
   const allFiles = await readdir(pathName, { withFileTypes: true });
   return allFiles
@@ -25,28 +24,28 @@ const getChildren = async ({ pathName, isDir = true }: GetChildrenParams) => {
 };
 
 export const getResult = async (): Promise<Result> => {
-  const results: Result = {
-    album: '',
-    song: '',
-    lyric: '',
-  };
+  const lyricsPath = path.join(process.cwd(), 'lyrics');
 
-  const pathName = path.join(process.cwd(), 'public', 'lyrics');
-  const directories = await getChildren({ pathName });
-  const directoryName = getRandom(directories);
-  results.album = transformName(directoryName);
+  const dirNames = await getChildren({
+    pathName: lyricsPath,
+  });
+  const dirName = getRandom(dirNames);
 
-  const files = await getChildren({
-    pathName: path.join(pathName, directoryName),
+  const songNames = await getChildren({
+    pathName: path.join(lyricsPath, dirName),
     isDir: false,
   });
-  const fileName = getRandom(files);
-  results.song = transformName(fileName);
+  const songName = getRandom(songNames);
 
-  const filePath = path.join(pathName, directoryName, fileName);
-  const rawData = await readFile(filePath, { encoding: 'utf8' });
-  const line = getRandom(rawData.split('\n')).toLowerCase();
-  results.lyric = line;
+  const fullPath = path.join(lyricsPath, dirName, songName);
+  const fileContents = await readFile(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
+  const validLyrics = content
+    .split('\n')
+    .map((line) => line.trim().toLowerCase())
+    .filter((line) => line.length);
 
-  return results;
+  const lyric = getRandom(validLyrics);
+  const { album, song } = data;
+  return { album, song, lyric };
 };
