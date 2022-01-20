@@ -13,18 +13,18 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <div className="w-screen h-screen bg-gradient-to-br from-purple-500 to-purple-700 text-slate-100 flex flex-col items-center justify-center">
-      <header className="w-full absolute top-0 drop-shadow-md py-2 text-center bg-white">
-        <h1 className="font-extrabold bg-gradient-to-bl from-purple-500 via-purple-700 to-purple-900 text-transparent bg-clip-text text-4xl cursor-default">
+    <div className="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-purple-500 to-purple-700 text-slate-100">
+      <header className="absolute top-0 w-full py-2 text-center bg-white drop-shadow-md">
+        <h1 className="text-4xl font-extrabold text-transparent cursor-default bg-gradient-to-bl from-purple-500 via-purple-700 to-purple-900 bg-clip-text">
           kepilyrics
         </h1>
       </header>
 
-      <main className="px-4">
-        <h1 className="text-center font-bold text-4xl md:text-6xl w-full">
+      <main className="max-w-4xl px-4">
+        <h1 className="w-full text-4xl font-bold text-center md:text-6xl">
           {lyric}
         </h1>
-        <h2 className="text-center text-2xl md:text-3xl w-full py-2 md:py-4">
+        <h2 className="w-full py-2 text-2xl text-center md:text-3xl md:py-4">
           an hourly lyrics bot for Kep1er!
         </h2>
         <div className="w-full text-center">
@@ -32,7 +32,7 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
             onClick={() => {
               window.open('https://twitter.com/kepilyrics', '_blank');
             }}
-            className="text-center px-3 py-2 mx-2 rounded-md bg-slate-100 text-purple-800 font-semibold hover:bg-slate-200 focus:outline-none focus:ring focus:ring-purple-300 text-2xl drop-shadow-md"
+            className="px-3 py-2 mx-2 text-2xl font-semibold text-center text-purple-800 rounded-md bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
           >
             view bot
           </button>
@@ -44,12 +44,12 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
                 '_blank'
               );
             }}
-            className="text-center px-3 py-2 mx-2 rounded-md text-slate-100 bg-purple-800 font-semibold hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 text-2xl drop-shadow-md"
+            className="px-3 py-2 mx-2 text-2xl font-semibold text-center bg-purple-800 rounded-md text-slate-100 hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
           >
             follow us
           </button>
         </div>
-        <p className="text-center w-full py-2 italic">
+        <p className="w-full py-2 italic text-center">
           (refresh for another lyric on this page)
         </p>
       </main>
