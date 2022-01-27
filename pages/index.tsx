@@ -6,17 +6,27 @@ import { getResult } from '../utils/lyric';
 
 type HomePageProps = {
   lyric: string;
-  seo: {
-    attributes: any;
-    content: string | null;
-    tag: any;
-  }[];
+  information: {
+    seo: {
+      attributes: any;
+      content: string | null;
+      tag: any;
+    }[];
+    backgroundVideo: {
+      video: {
+        mp4Url: string;
+      };
+    };
+  };
 };
 
-const Home: NextPage<HomePageProps> = ({ lyric, seo }: HomePageProps) => (
+const Home: NextPage<HomePageProps> = ({
+  lyric,
+  information,
+}: HomePageProps) => (
   <>
     <Head>
-      {renderMetaTags(seo)}
+      {renderMetaTags(information.seo)}
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
@@ -34,7 +44,10 @@ const Home: NextPage<HomePageProps> = ({ lyric, seo }: HomePageProps) => (
           muted
           className="absolute z-10 object-fill w-auto h-auto min-w-full min-h-full max-w-none max-h-none"
         >
-          <source src="/videos/background_vid.mp4" type="video/mp4" />
+          <source
+            src={information.backgroundVideo.video.mp4Url}
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
 
@@ -100,13 +113,18 @@ export const getServerSideProps: GetServerSideProps = async () => {
         content
         tag
       }
+      backgroundVideo {
+        video {
+          mp4Url
+        }
+      }
     }
   }
   `,
     }),
   ]);
 
-  return { props: { lyric, seo: information.seo } };
+  return { props: { lyric, information } };
 };
 
 export default Home;
