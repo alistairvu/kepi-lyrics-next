@@ -6,8 +6,6 @@ class MyDocument extends Document {
       <Html lang="en">
         <head>
           <Head />
-          <link rel="manifest" href="/pwa/manifest.webmanifest" />
-          <link rel="apple-touch-icon" href="/pwa/192x192.png"></link>
         </head>
         <body>
           <Main />
