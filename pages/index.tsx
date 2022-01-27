@@ -1,15 +1,22 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
+import { renderMetaTags } from 'react-datocms';
+import request from '../lib/datocms';
 import { getResult } from '../utils/lyric';
 
-const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
+type HomePageProps = {
+  lyric: string;
+  seo: {
+    attributes: any;
+    content: string | null;
+    tag: any;
+  }[];
+};
+
+const Home: NextPage<HomePageProps> = ({ lyric, seo }: HomePageProps) => (
   <>
     <Head>
-      <title>kepilyrics</title>
-      <meta
-        name="description"
-        content="An automated lyrics bot for Kep1er, running on the hour, every hour"
-      />
+      {renderMetaTags(seo)}
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
@@ -62,9 +69,20 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
               follow us
             </button>
           </div>
-          <p className="w-full py-2 italic text-center">
+          <p className="w-full py-1 italic text-center">
             (refresh for another lyric on this page)
           </p>
+
+          <div className="w-full text-center">
+            <a
+              href="https://github.com/alistairvu/kepi-lyrics-next"
+              className="w-full text-xs text-center hover:underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
         </div>
       </main>
     </div>
@@ -72,8 +90,23 @@ const Home: NextPage<{ lyric: string }> = ({ lyric }: { lyric: string }) => (
 );
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { lyric } = await getResult();
-  return { props: { lyric } };
+  const [{ lyric }, { information }] = await Promise.all([
+    getResult(),
+    request({
+      query: `{
+    information {
+      seo: _seoMetaTags {
+        attributes
+        content
+        tag
+      }
+    }
+  }
+  `,
+    }),
+  ]);
+
+  return { props: { lyric, seo: information.seo } };
 };
 
 export default Home;
