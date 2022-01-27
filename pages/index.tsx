@@ -42,6 +42,7 @@ const Home: NextPage<HomePageProps> = ({
           loop
           autoPlay
           muted
+          playsInline
           className="absolute z-10 object-fill w-auto h-auto min-w-full min-h-full max-w-none max-h-none"
         >
           <source
