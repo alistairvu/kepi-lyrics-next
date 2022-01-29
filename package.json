@@ -11,6 +11,7 @@
     "graphql": "^16.3.0",
     "graphql-request": "^3.7.0",
     "gray-matter": "^4.0.3",
+    "mixpanel-browser": "^2.43.0",
     "next": "12.0.7",
     "next-connect": "^0.11.0",
     "react": "17.0.2",
@@ -20,6 +21,7 @@
     "twitter-api-v2": "^1.8.1"
   },
   "devDependencies": {
+    "@types/mixpanel-browser": "^2.36.0",
     "@types/node": "17.0.8",
     "@types/react": "17.0.38",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
