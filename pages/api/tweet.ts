@@ -33,14 +33,12 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     return res.status(200).send({ success: true, tweeted: true, tweet });
   } catch (err: any) {
-    return res
-      .status(500)
-      .send({
-        success: false,
-        code: err.code || 500,
-        message: err.message || 'Something went wrong',
-        err: JSON.stringify(err),
-      });
+    return res.status(500).send({
+      success: false,
+      code: err.code || 500,
+      message: err.message || 'Something went wrong',
+      err: JSON.stringify(err),
+    });
   }
 };
 
