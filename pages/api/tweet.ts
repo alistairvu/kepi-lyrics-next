@@ -24,24 +24,27 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       song: '',
     };
 
-    const prevTweetContent = await prisma.tweetData.findFirst({
-      orderBy: {
-        updatedAt: 'desc',
-      },
-    });
-
-    do {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
       // eslint-disable-next-line no-await-in-loop
       const { lyric, song, album } = await getResult();
       nextTweetContent.lyric = lyric;
       nextTweetContent.song = song;
       nextTweetContent.album = album;
-    } while (
-      // eslint-disable-next-line no-unmodified-loop-condition
-      prevTweetContent !== null &&
-      prevTweetContent.lyric !== nextTweetContent.lyric &&
-      prevTweetContent.song !== nextTweetContent.song
-    );
+
+      // eslint-disable-next-line no-await-in-loop
+      const tweetedLyrics = await prisma.tweetData.findFirst({
+        where: {
+          lyric,
+          song,
+          album,
+        },
+      });
+
+      if (tweetedLyrics === null) {
+        break;
+      }
+    }
 
     const tweet = `${
       nextTweetContent.lyric
