@@ -24,6 +24,10 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       song: '',
     };
 
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
     // eslint-disable-next-line no-constant-condition
     while (true) {
       // eslint-disable-next-line no-await-in-loop
@@ -38,6 +42,9 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
           lyric,
           song,
           album,
+          updatedAt: {
+            gt: yesterday,
+          },
         },
       });
 
@@ -58,10 +65,6 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
         message: `Invalid authorization header: ${authHeader}`,
       });
     }
-
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
 
     await Promise.all([
       twitterClient.tweetsV2.createTweet({
