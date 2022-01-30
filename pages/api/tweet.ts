@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { Result } from '../../utils/lyric';
 import { getResult } from '../../utils/lyric';
 import twitterClient from '../../lib/twitter';
+import { PrismaClient } from '@prisma/client';
 
 const getLyric = async (res: NextApiResponse<Result>) => {
   const result = await getResult();
@@ -11,13 +12,40 @@ const getLyric = async (res: NextApiResponse<Result>) => {
 const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const authHeader = req.headers.authorization;
+    const prisma = new PrismaClient();
 
     if (!authHeader) {
       throw new Error(`Invalid authorization header: ${authHeader}`);
     }
 
-    const { lyric, song } = await getResult();
-    const tweet = `${lyric}\n\n— ${song.toLowerCase()}`;
+    const nextTweetContent: Result = {
+      album: '',
+      lyric: '',
+      song: '',
+    };
+
+    const prevTweetContent = await prisma.tweetData.findFirst({
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
+
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      const { lyric, song, album } = await getResult();
+      nextTweetContent.lyric = lyric;
+      nextTweetContent.song = song;
+      nextTweetContent.album = album;
+    } while (
+      // eslint-disable-next-line no-unmodified-loop-condition
+      prevTweetContent !== null &&
+      prevTweetContent.lyric !== nextTweetContent.lyric &&
+      prevTweetContent.song !== nextTweetContent.song
+    );
+
+    const tweet = `${
+      nextTweetContent.lyric
+    }\n\n— ${nextTweetContent.song.toLowerCase()}`;
 
     if (authHeader !== `Bearer ${process.env.AUTH_SECRET_KEY}`) {
       return res.status(200).send({
@@ -28,9 +56,24 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       });
     }
 
-    await twitterClient.tweetsV2.createTweet({
-      text: tweet,
-    });
+    await Promise.all([
+      twitterClient.tweetsV2.createTweet({
+        text: tweet,
+      }),
+
+      prisma.tweetData.upsert({
+        where: {
+          id: prevTweetContent?.id || 1,
+        },
+        update: {
+          ...nextTweetContent,
+        },
+        create: {
+          ...nextTweetContent,
+        },
+      }),
+    ]);
+
     return res.status(200).send({ success: true, tweeted: true, tweet });
   } catch (err: any) {
     return res.status(500).send({
