@@ -56,20 +56,26 @@ const postLyric = async (req: NextApiRequest, res: NextApiResponse) => {
       });
     }
 
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
     await Promise.all([
       twitterClient.tweetsV2.createTweet({
         text: tweet,
       }),
 
-      prisma.tweetData.upsert({
+      prisma.tweetData.create({
+        data: {
+          ...nextTweetContent,
+        },
+      }),
+
+      prisma.tweetData.deleteMany({
         where: {
-          id: prevTweetContent?.id || 1,
-        },
-        update: {
-          ...nextTweetContent,
-        },
-        create: {
-          ...nextTweetContent,
+          updatedAt: {
+            lt: yesterday,
+          },
         },
       }),
     ]);
