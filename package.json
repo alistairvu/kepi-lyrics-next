@@ -7,7 +7,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:migrate": "dotenv -e .env.local yarn prisma migrate dev",
-    "db:studio": "dotenv -e .env.local yarn prisma studio"
+    "db:studio": "dotenv -e .env.local yarn prisma studio",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@prisma/client": "3.8.1",
