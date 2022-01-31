@@ -61,28 +61,38 @@ const Home: NextPage<HomePageProps> = ({
           <h2 className="w-full py-2 text-2xl text-center md:text-3xl md:py-4">
             an hourly lyrics bot for Kep1er!
           </h2>
-          <div className="w-full space-x-5 text-center">
-            <button
-              onClick={() => {
-                window.open('https://twitter.com/kepilyrics', '_blank');
-              }}
-              className="px-3 py-2 text-2xl font-semibold text-center text-purple-800 rounded-md hover:scale-110 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
+
+          <div className="w-full space-x-5 text-center py-4">
+            <a
+              href="https://twitter.com/kepilyrics"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 text-2xl font-semibold text-center text-purple-800 rounded-md bg-slate-100 hover:bg-slate-300 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
             >
               view bot
-            </button>
+            </a>
 
-            <button
-              onClick={() => {
-                window.open(
-                  'https://twitter.com/intent/follow?screen_name=kepilyrics',
-                  '_blank'
-                );
-              }}
-              className="px-3 py-2 text-2xl font-semibold text-center bg-purple-800 rounded-md hover:scale-110 text-slate-100 hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
+            <a
+              href="https://twitter.com/intent/follow?screen_name=kepilyrics"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 text-2xl font-semibold text-center bg-purple-800 rounded-md  text-slate-100 hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
             >
               follow us
-            </button>
+            </a>
           </div>
+
+          <div className="w-full space-x-5 text-center py-4">
+            <a
+              href="https://curiouscat.live/kepilyrics"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 text-2xl font-semibold text-center bg-orange-500 rounded-md  text-slate-800 hover:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300 drop-shadow-md"
+            >
+              curiouscat
+            </a>
+          </div>
+
           <p className="w-full py-1 italic text-center">
             (refresh for another lyric on this page)
           </p>
