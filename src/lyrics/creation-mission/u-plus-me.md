@@ -15,21 +15,13 @@ When we add you and I, all other solutions are all pass
 
 It’s love, do it now
 
-Like a “+” “+” if it adds
+Like a plus-plus if it adds, We’re together, we become stronger than two
 
-We’re together, we become stronger than two
-
-This moment, it can’t be stopped
-
-You know, it’s better, U plus Me equals love
+This moment, it can’t be stopped, You know, it’s better, U plus Me equals love
 
 It’s Love, U plus Me, U U plus Me, yeah
 
-You and I who will blindly shine more than any love
-
-We’re together, never stop us now
-
-U plus me, it’s love
+You and I who will blindly shine more than any love, We’re together, never stop us now, U plus me, it’s love
 
 Don’t hesitate, don’t stop, You and me, we got the love
 

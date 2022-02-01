@@ -57,5 +57,6 @@ export const getResult = async (): Promise<Result> => {
   const lyric = getRandom(validLyrics);
 
   const { album, song } = data;
+
   return { album, song, lyric };
 };
