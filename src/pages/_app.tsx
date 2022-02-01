@@ -1,8 +1,8 @@
-import '../styles/globals.css';
+import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import mixpanel from 'mixpanel-browser';
+import '~/styles/globals.css';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -13,7 +13,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       mixpanel.track(url);
-      console.log(url);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);

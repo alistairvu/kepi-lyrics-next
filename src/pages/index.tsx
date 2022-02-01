@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { renderMetaTags } from 'react-datocms';
-import request from '../lib/datocms';
-import { getResult } from '../utils/lyric';
+import request from '~/lib/datocms';
+import { getResult } from '~/utils/lyric';
 
 type HomePageProps = {
   lyric: string;
@@ -62,7 +62,7 @@ const Home: NextPage<HomePageProps> = ({
             an hourly lyrics bot for Kep1er!
           </h2>
 
-          <div className="w-full space-x-5 text-center py-4">
+          <div className="w-full py-4 space-x-5 text-center">
             <a
               href="https://twitter.com/kepilyrics"
               target="_blank"
@@ -76,18 +76,18 @@ const Home: NextPage<HomePageProps> = ({
               href="https://twitter.com/intent/follow?screen_name=kepilyrics"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-3 text-2xl font-semibold text-center bg-purple-800 rounded-md  text-slate-100 hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
+              className="px-4 py-3 text-2xl font-semibold text-center bg-purple-800 rounded-md text-slate-100 hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
             >
               follow us
             </a>
           </div>
 
-          <div className="w-full space-x-5 text-center py-4">
+          <div className="w-full py-4 space-x-5 text-center">
             <a
               href="https://curiouscat.live/kepilyrics"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-3 text-2xl font-semibold text-center bg-orange-500 rounded-md  text-slate-800 hover:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300 drop-shadow-md"
+              className="px-4 py-3 text-2xl font-semibold text-center bg-orange-500 rounded-md text-slate-800 hover:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300 drop-shadow-md"
             >
               curiouscat
             </a>

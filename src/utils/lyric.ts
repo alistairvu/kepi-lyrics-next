@@ -13,7 +13,7 @@ type GetChildrenParams = {
   isDir?: boolean;
 };
 
-const getRandom = (elements: string[]) =>
+const getRandom = <T>(elements: T[]): T =>
   elements[Math.floor(Math.random() * elements.length)];
 
 const getChildren = async ({ pathName, isDir = true }: GetChildrenParams) => {
@@ -24,18 +24,27 @@ const getChildren = async ({ pathName, isDir = true }: GetChildrenParams) => {
 };
 
 export const getResult = async (): Promise<Result> => {
-  const lyricsPath = path.join(process.cwd(), 'lyrics');
+  const lyricsPath = path.join(process.cwd(), 'src', 'lyrics');
 
   const dirNames = await getChildren({
     pathName: lyricsPath,
   });
-  const dirName = getRandom(dirNames);
 
-  const songNames = await getChildren({
-    pathName: path.join(lyricsPath, dirName),
-    isDir: false,
-  });
-  const songName = getRandom(songNames);
+  const songNames = await Promise.all(
+    dirNames.map((dir) =>
+      getChildren({
+        pathName: path.join(lyricsPath, dir),
+        isDir: false,
+      }).then((res) =>
+        res.map((song) => ({
+          dirName: dir,
+          songName: song,
+        }))
+      )
+    )
+  ).then((res) => res.reduce((acc, curr) => [...acc, ...curr], []));
+
+  const { dirName, songName } = getRandom(songNames);
 
   const fullPath = path.join(lyricsPath, dirName, songName);
   const fileContents = await readFile(fullPath, 'utf8');

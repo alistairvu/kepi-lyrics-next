@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { Result } from '../../utils/lyric';
-import { getResult } from '../../utils/lyric';
-import twitterClient from '../../lib/twitter';
 import { PrismaClient } from '@prisma/client';
+import type { Result } from '~/utils/lyric';
+import { getResult } from '~/utils/lyric';
+import twitterClient from '~/lib/twitter';
 
 const getLyric = async (res: NextApiResponse<Result>) => {
   const result = await getResult();

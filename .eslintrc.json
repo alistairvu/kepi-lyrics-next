@@ -5,20 +5,75 @@
     "node": true
   },
   "extends": [
-    "next/core-web-vitals",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "xo",
-    "prettier"
+    "airbnb",
+    "prettier",
+    "next/core-web-vitals"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 13,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
-  "rules": {}
+  "plugins": ["react", "prettier", "@typescript-eslint"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".tsx", ".jsx"] }
+    ],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function" }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state"]
+      }
+    ],
+    "no-undef": "off",
+    "import/prefer-default-export": "off",
+    "prettier/prettier": "error",
+    "import/order": [
+      "error",
+      {
+        "pathGroups": [
+          {
+            "pattern": "~/**",
+            "group": "parent"
+          },
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "next",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "group": "builtin",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next/**", "next"]
+      }
+    ]
+  }
 }
