@@ -49,12 +49,13 @@ export const getResult = async (): Promise<Result> => {
   const fullPath = path.join(lyricsPath, dirName, songName);
   const fileContents = await readFile(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
+
   const validLyrics = content
     .split('\n')
     .map((line) => line.trim().toLowerCase())
     .filter((line) => line.length);
-
   const lyric = getRandom(validLyrics);
+
   const { album, song } = data;
   return { album, song, lyric };
 };
