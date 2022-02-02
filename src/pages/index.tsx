@@ -1,6 +1,9 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { renderMetaTags } from 'react-datocms';
+import { PageBody } from '~/components/PageBody';
+import { PageContainer } from '~/components/PageContainer';
+import { PageHeader } from '~/components/PageHeader';
 import request from '~/lib/datocms';
 import { getResult } from '~/utils/lyric';
 
@@ -30,86 +33,13 @@ const Home: NextPage<HomePageProps> = ({
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-br from-purple-500 to-purple-700 text-slate-100">
-      <header className="absolute top-0 z-30 flex items-center justify-center w-full py-2 text-center bg-white drop-shadow-md">
-        <h1 className="text-4xl font-extrabold text-transparent cursor-default bg-gradient-to-bl from-purple-500 via-purple-700 to-purple-900 bg-clip-text">
-          kepilyrics
-        </h1>
-      </header>
-
-      <main className="relative flex items-center justify-center w-screen h-screen overflow-hidden">
-        <video
-          loop
-          autoPlay
-          muted
-          playsInline
-          className="absolute z-10 object-fill w-auto h-auto min-w-full min-h-full max-w-none max-h-none"
-        >
-          <source
-            src={information.backgroundVideo.video.mp4Url}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-
-        <div className="absolute z-20 min-w-full min-h-full opacity-75 bg-gradient-to-br from-purple-500 to-purple-700 max-w-none max-h-none" />
-
-        <div className="z-30 max-w-4xl px-4">
-          <h1 className="w-full text-4xl font-bold text-center md:text-6xl">
-            {lyric}
-          </h1>
-          <h2 className="w-full py-2 text-2xl text-center md:text-3xl md:py-4">
-            an hourly lyrics bot for Kep1er!
-          </h2>
-
-          <div className="w-full py-4 space-x-5 text-center">
-            <a
-              href="https://twitter.com/kepilyrics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-3 text-2xl font-semibold text-center text-purple-800 rounded-md bg-slate-100 hover:bg-slate-300 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
-            >
-              view bot
-            </a>
-
-            <a
-              href="https://twitter.com/intent/follow?screen_name=kepilyrics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-3 text-2xl font-semibold text-center bg-purple-800 rounded-md text-slate-100 hover:bg-purple-900 focus:outline-none focus:ring focus:ring-purple-300 drop-shadow-md"
-            >
-              follow us
-            </a>
-          </div>
-
-          <div className="w-full py-4 space-x-5 text-center">
-            <a
-              href="https://curiouscat.live/kepilyrics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-3 text-2xl font-semibold text-center bg-orange-500 rounded-md text-slate-800 hover:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300 drop-shadow-md"
-            >
-              curiouscat
-            </a>
-          </div>
-
-          <p className="w-full py-1 italic text-center">
-            (refresh for another lyric on this page)
-          </p>
-
-          <div className="w-full text-center">
-            <a
-              href="https://github.com/alistairvu/kepi-lyrics-next"
-              className="w-full text-xs text-center hover:underline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </main>
-    </div>
+    <PageContainer>
+      <PageHeader />
+      <PageBody
+        videoUrl={information.backgroundVideo.video.mp4Url}
+        lyric={lyric}
+      />
+    </PageContainer>
   </>
 );
 
